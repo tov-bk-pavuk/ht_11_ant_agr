@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'book_store.apps.BookStoreConfig',
+    'django_extensions',
+
     'debug_toolbar',
-
-    'ht_11_ant_agr',  # Книжный магазин
-
-
 ]
 
 MIDDLEWARE = [
