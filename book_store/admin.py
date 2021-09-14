@@ -10,6 +10,7 @@ class BookInline(admin.TabularInline):
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
     fields = ['name', 'age']
+    list_display = ['name', 'age']
     list_filter = ('age',)
 
 
@@ -23,9 +24,10 @@ class PublisherAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
+    list_filter = ('rating',)
+    list_display = ['name', 'rating', 'price', 'pubdate']
     fields = ('name', ('pages', 'price', 'rating'), 'authors', 'publisher', 'pubdate')
     date_hierarchy = 'pubdate'
-    list_filter = ('rating',)
     filter_horizontal = ['authors']
 
 
