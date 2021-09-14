@@ -1,10 +1,11 @@
+from random import choice, randrange, uniform
+
+from book_store.models import Author, Book, Publisher, Store
+
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from book_store.models import Author, Publisher, Book, Store
-
 from faker import Faker
-from random import randrange, uniform, choice
 
 fake = Faker()
 
@@ -13,8 +14,8 @@ class Command(BaseCommand):
     data = timezone.datetime
 
     def add_arguments(self, parser):
-        parser.add_argument('amount', type=int, choices=range(1, 1000),
-                            help=u'amount - от 1 до 1000')
+        parser.add_argument('amount', type=int, choices=range(10, 1000),
+                            help=u'amount - от 10 до 1000')
 
     def handle(self, *args, **options):
         amount = options['amount']
@@ -44,13 +45,14 @@ class Command(BaseCommand):
             # authors=Author.objects.get(pk=(randrange(1, amount))),
             pubdate=f'{randrange(1920, 2020)}-{choice(seq)}-{choice(seq_1)}') for i in range(amount)]
         Book.objects.bulk_create(book)
-'''
-        authors_5 = Author.objects.filter(pk__range=(1, 5))
-        books = Book.objects.all()
-        for i, k in zip(books, authors_5):
-            i.authors.add(k)
-        # books.authors.add(authors_5)
 
-        # Entry.objects.bulk_update(objs, ['headline'])
-        # Book.objects.bulk_update(books, ['authors'])
-'''
+        authors = Author.objects.all()
+        length = len(authors)
+        team = list()
+        for i in range(1, randrange(3, 7)):
+            team.append(authors[randrange(length)])
+
+        books = Book.objects.filter(pk__range=(last, amount + last - 1))
+        for i in books:
+            for k in team:
+                i.authors.add(k)
