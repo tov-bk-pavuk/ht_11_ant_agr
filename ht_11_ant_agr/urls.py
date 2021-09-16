@@ -15,11 +15,11 @@ Including another URLconf
 """
 import debug_toolbar
 
-from django.conf import settings
+#  from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
-from book_store import views
+#  from book_store import views
 
 urlpatterns = [
     path('', include('book_store.urls')),

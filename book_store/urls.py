@@ -1,5 +1,7 @@
-from django.urls import path
 from book_store import views
+
+from django.urls import path
+
 
 urlpatterns = [
     path('', views.home, name='home'),
