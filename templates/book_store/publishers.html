@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}Издатели{% endblock %}
 
 {% block content %}
-
+    <h5><a href="{% url 'home' %}">Домой</a></h5>
+    <h4>Всё издающие други</h4>
+    <div>
+        {% for i in publishers %}
+        <p>Не сильно уважаемый издатель "{{ i.name  }}"</p>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}Писаки писацкие{% endblock %}
 
 {% block content %}
+    <h5><a href="{% url 'home' %}">Домой</a></h5>
+    <h4>Авторижки жалкие.</h4>
+    <div>
+        {% for i in authors %}
+        <p>Многоуважаемый автор "{{ i.name  }}"</p>
+        {% endfor %}
 
+    </div>
 {% endblock %}

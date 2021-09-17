@@ -6,8 +6,14 @@
     <h5><a href="{% url 'home' %}">Домой</a></h5>
     <h4>Книжечки, мой друг.</h4>
     <div>
-        {% for i in books %}
-        <p>Книга "{{ i.name  }}" - Цена: {{ i.price }} грн</p>
+        <p>Всего книг: {{ amount }}</p>
+        {% for book in books %}
+            <p>Книга: "{{ book.name  }}"  <strong>Цена:</strong> {{ book.price }} грн </p>
+            <p style="font-weight:bold;">Авторы:</p>
+            {% for author in book.authors.all %}
+            <p>{{ author.name }}, Возраст: {{ author.age }}</p>
+            {% endfor %}
+            </br>
         {% endfor %}
     </div>
 {% endblock %}
