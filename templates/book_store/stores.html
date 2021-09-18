@@ -5,9 +5,22 @@
 {% block content %}
     <h5><a href="{% url 'home' %}">Домой</a></h5>
     <h4>Магазинчики, мой друг.</h4>
-    <div>
-        {% for i in stores %}
-        <p>Магазин "{{ i.name  }}"</p>
+    <table border="1" cellspacing="1" cellpadding="3">
+        <tr>
+            <td>ID</td>
+            <td>Магазин</td>
+            <td>Книг</td>
+            <td>Ссылка</td>
+
+        </tr>
+        {% for store in stores %}
+            <tr>
+                <td>{{ store.id  }}</td>
+                <td>{{ store.name  }}</td>
+                <td align="center">{{ store.books.count  }}</td>
+                <td><a href="{% url 'sto_det' id=store.id %}">подробнее</a></td>
+
+            </tr>
         {% endfor %}
-    </div>
+    </table>
 {% endblock %}

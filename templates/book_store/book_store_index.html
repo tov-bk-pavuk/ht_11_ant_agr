@@ -5,9 +5,11 @@
 {% block content %}
     <h4>Раздэлы магазина</h4>
     <div>
-        <p><a href="{% url 'books' %}">Книжки</a></p>
-        <p><a href="{% url 'publishers' %}">Издатели</a></p>
-        <p><a href="{% url 'stores' %}">Магазины</a></p>
-        <p><a href="{% url 'authors' %}">Авторы</a></p>
+        <ul>
+        <li><a href="{% url 'books' %}">Книжки</a></li>
+        <li><a href="{% url 'publishers' %}">Издатели</a></li>
+        <li><a href="{% url 'stores' %}">Магазины</a></li>
+        <li><a href="{% url 'authors' %}">Авторы</a></li>
+        </ul>
     </div>
 {% endblock %}

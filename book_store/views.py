@@ -40,12 +40,26 @@ def publishers_detailed(request, id):
 
 
 def stores(request):
-    stores_query = Store.objects.filter(pk__range=(10, 20))
+    stores_query = Store.objects.prefetch_related('books').all()
     return render(request, "book_store/stores.html",
                   context={'stores': stores_query})
 
 
+def stores_detailed(request, id):
+    pk = Store.objects.prefetch_related('books').get(pk=id)
+    return render(request, 'book_store/detailed_store.html', context={
+        'pk': pk,
+    })
+
+
 def authors(request):
     authors_query = Author.objects.filter(pk__range=(10, 20))
-    return render(request, "book_store/authors.html",
-                  context={'authors': authors_query})
+    return render(request, "book_store/authors.html",  # authors_detailed, name='aut_det'),
+                  context={'authors': authors_query})  # stores_detailed, name='sto_det'),
+
+
+def authors_detailed(request, id):
+    pk = Author.objects.prefetch_related('book_set').get(pk=id)
+    return render(request, 'book_store/detailed_authors.html', context={
+        'pk': pk,
+    })
