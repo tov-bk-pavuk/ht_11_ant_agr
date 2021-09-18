@@ -5,9 +5,23 @@
 {% block content %}
     <h5><a href="{% url 'home' %}">Домой</a></h5>
     <h4>Всё издающие други</h4>
-    <div>
-        {% for i in publishers %}
-        <p>Не сильно уважаемый издатель "{{ i.name  }}"</p>
+    
+    <table border="1" cellspacing="1" cellpadding="3">
+        <tr>
+            <td>ID</td>
+            <td>Издатель</td>
+            <td>Книг</td>
+            <td>Ссылка</td>
+
+        </tr>
+        {% for publisher in publishers %}
+            <tr>
+                <td>{{ publisher.id  }}</td>
+                <td>{{ publisher.name  }}</td>
+                <td align="center">{{ publisher.book_set.count  }}</td>
+                <td><a href="{% url 'pub_det' id=publisher.id %}">подробнее</a></td>
+
+            </tr>
         {% endfor %}
-    </div>
+    </table>
 {% endblock %}

@@ -3,17 +3,29 @@
 {% block title %}Список книг{% endblock %}
 
 {% block content %}
-    <h5><a href="{% url 'home' %}">Домой</a></h5>
+    <h5><a href="{% url 'home' %}">На главную</a></h5>
     <h4>Книжечки, мой друг.</h4>
     <div>
-        <p>Всего книг: {{ amount }}</p>
+        <h2>Всего книг: {{ amount }}</h2>
+        <table border="1", cellspacing="1px" cellpadding="5px">
+        <tr style="font-weight: bold">
+                <td>id</td>
+                <td align="center">Название книги</td>
+                <td>Страниц</td>
+                <td align="center">Цена, грн</td>
+                <td>Дата публикации</td>
+                <td>Ссылка</td>
+            </tr>
         {% for book in books %}
-            <p>Книга: "{{ book.name  }}"  <strong>Цена:</strong> {{ book.price }} грн </p>
-            <p style="font-weight:bold;">Авторы:</p>
-            {% for author in book.authors.all %}
-            <p>{{ author.name }}, Возраст: {{ author.age }}</p>
-            {% endfor %}
-            </br>
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.name  }}</td>
+                <td align="center">{{ book.pages }}</td>
+                <td>{{ book.price }}</td>
+                <td>{{ book.pubdate }}</td>
+                <td><a href="{% url 'detailed' id=book.id %}">подробнее...</a></td>
+            </tr>
         {% endfor %}
+        </table>
     </div>
 {% endblock %}

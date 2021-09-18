@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Про книгу {{ pk.name }}{% endblock %}
+
+{% block content %}
+    <div>
+        <p><a href="{% url 'books' %}">К списку книг</a></p>
+        <table cellpadding="2" border="1" width="80%">
+        <tr>
+            <td>Книга:</td>
+            <td>{{ pk.name}}</td>
+        </tr>
+        <tr>
+            <td> Дата публикации:</td>
+            <td>{{pk.pubdate }}</td>
+        </tr>
+        <tr>
+            <td> Цена:</td>
+            <td>{{pk.price }} грн</td>
+        </tr>
+        <tr>
+            <td> Количество страниц:</td>
+            <td>{{pk.pages }}</td>
+        </tr>
+        <tr>
+            <td> Рейтинг</td>
+            <td>{{pk.rating }}</td>
+        </tr>
+        <tr>
+            <td> Издатель</td>
+            <td>{{pk.publisher }}</td>
+        </tr>
+        <td>Авторы:</td>
+        <td>
+        {% for author in pk.authors.all %}
+            <p>{{ author }}</p>
+        {% endfor %}
+        </td>
+        </table>
+    </div>
+{% endblock %}

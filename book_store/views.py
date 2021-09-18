@@ -8,17 +8,35 @@ def home(request):
 
 
 def book_list(request):
-    books_query = Book.objects.prefetch_related('authors').filter(pk__range=(5, 10))
-    books_count = Book.objects.all().count()
+    # books_query = Book.objects.prefetch_related('authors').filter(pk__range=(5, 10))
+    # books_query = Book.objects.prefetch_related('authors').all()
+    books_query = Book.objects.all()
+    books_count = books_query.count()
     return render(request, "book_store/books.html",
                   context={'books': books_query,
-                           'amount': books_count})
+                           'amount': books_count,
+                           })
+
+
+def detailed(request, id):
+    pk = Book.objects.prefetch_related('authors').get(pk=id)
+    return render(request, 'book_store/detailed_book.html', context={
+        'pk': pk,
+    })
 
 
 def publishers(request):
-    publishers_query = Publisher.objects.filter(pk__range=(10, 20))
+    publishers_query = Publisher.objects.prefetch_related('book_set').all()
     return render(request, "book_store/publishers.html",
-                  context={'publishers': publishers_query})
+                  context={'publishers': publishers_query,
+                           })
+
+
+def publishers_detailed(request, id):
+    pk = Publisher.objects.prefetch_related('book_set').get(pk=id)
+    return render(request, 'book_store/detailed_publisher.html', context={
+        'pk': pk,
+    })
 
 
 def stores(request):
