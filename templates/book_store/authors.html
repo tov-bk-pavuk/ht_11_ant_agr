@@ -1,14 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %}Писаки писацкие{% endblock %}
+{% block title %}Авторы{% endblock %}
 
 {% block content %}
     <h5><a href="{% url 'home' %}">Домой</a></h5>
-    <h4>Авторижки жалкие.</h4>
-    <div>
-        {% for i in authors %}
-        <p>Многоуважаемый автор "{{ i.name  }}"</p>
-        {% endfor %}
+    <table border="1" cellspacing="1" cellpadding="3">
+        <tr>
+            <td>ID</td>
+            <td>Автор</td>
+            <td>Книг</td>
+            <td>Ссылка</td>
 
-    </div>
+        </tr>
+        {% for author in authors %}
+            <tr>
+                <td>{{ author.id  }}</td>
+                <td>{{ author.name  }}</td>
+                <td align="center">{{ author.book_set.count  }}</td>
+                <td><a href="{% url 'aut_det' id=author.id %}">подробнее</a></td>
+
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

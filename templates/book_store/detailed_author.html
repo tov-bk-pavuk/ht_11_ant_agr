@@ -5,9 +5,10 @@
 {% block content %}
     <p><a href="{% url 'home' %}">Главная</a></p>
     <p><a href="{% url 'authors' %}">Назад</a></p>
+    <p>Автором было написано {{ pk.book_set.all.count }} книг</p>
     <table border="1" cellspacing="1" cellpadding="10">
         <tr>
-            <td>Издатель</td>
+            <td>Автор</td>
             <td>{{ pk.name }}</td>
         </tr>
         <tr>
