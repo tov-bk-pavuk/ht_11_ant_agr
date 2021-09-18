@@ -23,7 +23,7 @@
                 <td align="center">{{ book.pages }}</td>
                 <td>{{ book.price }}</td>
                 <td>{{ book.pubdate }}</td>
-                <td><a href="{% url 'detailed' id=book.id %}">подробнее...</a></td>
+                <td><a href="{% url 'detailed' pp=book.id %}">подробнее...</a></td>
             </tr>
         {% endfor %}
         </table>

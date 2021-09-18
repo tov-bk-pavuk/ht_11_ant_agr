@@ -19,7 +19,7 @@
                 <td>{{ publisher.id  }}</td>
                 <td>{{ publisher.name  }}</td>
                 <td align="center">{{ publisher.book_set.count  }}</td>
-                <td><a href="{% url 'pub_det' id=publisher.id %}">подробнее</a></td>
+                <td><a href="{% url 'pub_det' pp=publisher.id %}">подробнее</a></td>
 
             </tr>
         {% endfor %}

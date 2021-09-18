@@ -18,7 +18,7 @@
                 <td>{{ store.id  }}</td>
                 <td>{{ store.name  }}</td>
                 <td align="center">{{ store.books.count  }}</td>
-                <td><a href="{% url 'sto_det' id=store.id %}">подробнее</a></td>
+                <td><a href="{% url 'sto_det' pp=store.id %}">подробнее</a></td>
 
             </tr>
         {% endfor %}

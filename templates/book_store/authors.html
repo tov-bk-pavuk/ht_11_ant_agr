@@ -17,7 +17,7 @@
                 <td>{{ author.id  }}</td>
                 <td>{{ author.name  }}</td>
                 <td align="center">{{ author.book_set.count  }}</td>
-                <td><a href="{% url 'aut_det' id=author.id %}">подробнее</a></td>
+                <td><a href="{% url 'aut_det' pp=author.id %}">подробнее</a></td>
 
             </tr>
         {% endfor %}

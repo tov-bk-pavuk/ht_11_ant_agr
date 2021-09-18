@@ -16,8 +16,8 @@ def book_list(request):
                            })
 
 
-def detailed(request, id):
-    pk = Book.objects.prefetch_related('authors').get(pk=id)
+def detailed(request, pp):
+    pk = Book.objects.prefetch_related('authors').get(pk=pp)
     return render(request, 'book_store/detailed_book.html', context={
         'pk': pk,
     })
@@ -30,8 +30,8 @@ def publishers(request):
                            })
 
 
-def publishers_detailed(request, id):
-    pk = Publisher.objects.prefetch_related('book_set').get(pk=id)
+def publishers_detailed(request, pp):
+    pk = Publisher.objects.prefetch_related('book_set').get(pk=pp)
     return render(request, 'book_store/detailed_publisher.html', context={
         'pk': pk,
     })
@@ -43,8 +43,8 @@ def stores(request):
                   context={'stores': stores_query})
 
 
-def stores_detailed(request, id):
-    pk = Store.objects.prefetch_related('books').get(pk=id)
+def stores_detailed(request, pp):
+    pk = Store.objects.prefetch_related('books').get(pk=pp)
     return render(request, 'book_store/detailed_store.html', context={
         'pk': pk,
     })
@@ -56,8 +56,8 @@ def authors(request):
                   context={'authors': authors_query})  # stores_detailed, name='sto_det'),
 
 
-def authors_detailed(request, id):
-    pk = Author.objects.prefetch_related('book_set').get(pk=id)
+def authors_detailed(request, pp):
+    pk = Author.objects.prefetch_related('book_set').get(pk=pp)
     return render(request, 'book_store/detailed_author.html', context={
         'pk': pk,
     })
