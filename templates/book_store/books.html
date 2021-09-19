@@ -15,6 +15,7 @@
                 <td align="center">Цена, грн</td>
                 <td>Дата публикации</td>
                 <td>Ссылка</td>
+                <td>Авторов</td>
             </tr>
         {% for book in books %}
             <tr>
@@ -24,6 +25,7 @@
                 <td>{{ book.price }}</td>
                 <td>{{ book.pubdate }}</td>
                 <td><a href="{% url 'detailed' pp=book.id %}">подробнее...</a></td>
+                <td align="center">{{ book.authors__count }}</td>
             </tr>
         {% endfor %}
         </table>
