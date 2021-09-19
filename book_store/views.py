@@ -1,5 +1,5 @@
+from django.db.models import Avg, Count, IntegerField
 from django.shortcuts import render
-from django.db.models import Avg, Count
 
 from .models import Author, Book, Publisher, Store
 
@@ -41,7 +41,8 @@ def publishers_detailed(request, pp):
 def stores(request):
     # .annotate(Avg(''))
     # <td align="center">{{ store.books.count  }}</td>
-    stores_query = Store.objects.prefetch_related('books').all().annotate(sred=Avg('books__price'))
+    stores_query = Store.objects.prefetch_related('books').\
+        all().annotate(sred=Avg('books__price', output_field=IntegerField()))
     return render(request, "book_store/stores.html",
                   context={'stores': stores_query})
 
