@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Avg, Count
 
 from .models import Author, Book, Publisher, Store
 
@@ -8,10 +9,10 @@ def home(request):
 
 
 def book_list(request):
-    books_query = Book.objects.all()
-    books_count = books_query.count()
+    books_query_ant = Book.objects.all().annotate(Count('authors'))
+    books_count = books_query_ant.count()
     return render(request, "book_store/books.html",
-                  context={'books': books_query,
+                  context={'books': books_query_ant,
                            'amount': books_count,
                            })
 
@@ -38,7 +39,9 @@ def publishers_detailed(request, pp):
 
 
 def stores(request):
-    stores_query = Store.objects.prefetch_related('books').all()
+    # .annotate(Avg(''))
+    # <td align="center">{{ store.books.count  }}</td>
+    stores_query = Store.objects.prefetch_related('books').all().annotate(sred=Avg('books__price'))
     return render(request, "book_store/stores.html",
                   context={'stores': stores_query})
 

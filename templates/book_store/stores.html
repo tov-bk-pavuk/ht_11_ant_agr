@@ -10,6 +10,7 @@
             <td>ID</td>
             <td>Магазин</td>
             <td>Книг</td>
+            <td>Средняя цена за книгу, грн </td>
             <td>Ссылка</td>
 
         </tr>
@@ -18,6 +19,7 @@
                 <td>{{ store.id  }}</td>
                 <td>{{ store.name  }}</td>
                 <td align="center">{{ store.books.count  }}</td>
+                <td align="center">{{ store.sred  }}</td>
                 <td><a href="{% url 'sto_det' pp=store.id %}">подробнее</a></td>
 
             </tr>
