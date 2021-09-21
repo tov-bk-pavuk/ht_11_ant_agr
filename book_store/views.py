@@ -1,7 +1,21 @@
 from django.db.models import Avg, Count, IntegerField
 from django.shortcuts import render
+from django.http import HttpResponse
 
 from .models import Author, Book, Publisher, Store
+
+from .forms import Notification
+
+
+def notification(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        text = request.POST.get('text')
+        datetime = request.POST.get('text')
+        return HttpResponse(f'Гипотенуза форма отправлена')
+    form = Notification()
+    data = {'nt_form': form}
+    return render(request, 'form.html', context=data)
 
 
 def home(request):
