@@ -15,7 +15,7 @@ def notification(request):
         return HttpResponse(f'Гипотенуза форма отправлена')
     form = Notification()
     data = {'nt_form': form}
-    return render(request, 'form.html', context=data)
+    return render(request, 'book_store/form.html', context=data)
 
 
 def home(request):

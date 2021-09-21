@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Напоминания</title>
 </head>
 <body>
-
+<form method="post">
+        {% csrf_token %}
+        <table>
+            {{ nt_form }}
+        </table>
+        <input type="submit" value="Создать">
+    </form>
 </body>
 </html>

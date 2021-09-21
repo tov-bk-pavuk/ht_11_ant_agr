@@ -5,6 +5,7 @@ from django.urls import path
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('ntfc/', views.notification, name='ntfc'),
     path('books/', views.book_list, name='books'),
     path('books/<int:pp>', views.detailed, name='detailed'),
     path('publishers/', views.publishers, name='publishers'),
