@@ -1,6 +1,9 @@
 from django.db.models import Avg, Count, IntegerField
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.http import HttpResponse
+
+from .tasks import notify
 
 from .models import Author, Book, Publisher, Store
 
@@ -8,14 +11,26 @@ from .forms import Notification
 
 
 def notification(request):
+    # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        email = request.POST.get('email')
-        text = request.POST.get('text')
-        datetime = request.POST.get('text')
-        return HttpResponse(f'Гипотенуза форма отправлена')
-    form = Notification()
-    data = {'nt_form': form}
-    return render(request, 'book_store/form.html', context=data)
+        # create a form instance and populate it with data from the request:
+        form = Notification(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            email = form.cleaned_data['email']
+            datetime = form.cleaned_data['datetime']
+            # команда создать задачу для селери:
+            notify(subject, email, datetime)
+            return HttpResponseRedirect('/thanks/')
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = Notification()
+    return render(request, 'book_store/form.html', {'form': form})
+
+
+def thanks(request):
+    return render(request, "book_store/thanks.html")
 
 
 def home(request):
