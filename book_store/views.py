@@ -1,7 +1,41 @@
-from django.db.models import Avg, Count, IntegerField
-from django.shortcuts import render
+from datetime import timedelta
 
+from django.db.models import Avg, Count, IntegerField
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.utils import timezone
+
+from .forms import Notification
 from .models import Author, Book, Publisher, Store
+from .tasks import notify
+
+
+def notification(request):
+    now = timezone.now()
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = Notification(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            massage = form.cleaned_data['subject']
+            email = form.cleaned_data['email']
+            datetime = form.cleaned_data['datetime']
+            # команда создать задачу для селери:
+            if datetime < now:
+                return HttpResponse('Дата в прошлом')
+            elif datetime > now + timedelta(days=2):
+                return HttpResponse('Слишком далёкое будущее')
+            notify.apply_async((massage, email), eta=datetime)
+            return HttpResponseRedirect('/thanks/')
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = Notification()
+    return render(request, 'book_store/form.html', {'form': form})
+
+
+def thanks(request):
+    return render(request, "book_store/thanks.html")
 
 
 def home(request):
