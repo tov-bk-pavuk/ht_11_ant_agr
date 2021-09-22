@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 
+from django.utils import timezone
+from datetime import timedelta
+
 from .tasks import notify
 
 from .models import Author, Book, Publisher, Store
@@ -11,17 +14,22 @@ from .forms import Notification
 
 
 def notification(request):
+    now = timezone.now()
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = Notification(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            subject = form.cleaned_data['subject']
+            massage = form.cleaned_data['subject']
             email = form.cleaned_data['email']
             datetime = form.cleaned_data['datetime']
             # команда создать задачу для селери:
-            notify(subject, email, datetime)
+            if datetime < now:
+                return HttpResponse('Дата в прошлом')
+            elif datetime > now + timedelta(days=2):
+                return HttpResponse('Слишком далёкое будущее')
+            notify.apply_async((massage, email, datetime), eta=datetime)
             return HttpResponseRedirect('/thanks/')
     # if a GET (or any other method) we'll create a blank form
     else:

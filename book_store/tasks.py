@@ -3,10 +3,10 @@ from django.core.mail import send_mail
 
 
 @shared_task
-def notify(subject, email, datetime):
+def notify(massage, email, datetime):
     delay = datetime  # Задержка отправки 2021-09-22 04:40
     from_email = 'mymail@gmail.com'
-    message = 'Сделай борща!'
+    subject = 'Notification'
     recipient_list = email
-    send_mail(subject, message, from_email, [recipient_list])
+    send_mail(subject, massage, from_email, [recipient_list])
 
