@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-import django.core.mail.backends.console
+# import django.core.mail.backends.console
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -140,8 +140,8 @@ INTERNAL_IPS = [
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_RESULT_BACKEND = 'django-db'
-CELERY_BROKER_URL = 'amqp://localhost' #CELERY_BROKER_URL = 'amqp://admin:admin@0.0.0.0:5672/'
-CELERY_ACCEPT_CONTENT = ['aplication/json']
+CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_ACCEPT_CONTENT = ['aplication/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE

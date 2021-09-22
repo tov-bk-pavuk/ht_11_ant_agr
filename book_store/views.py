@@ -1,16 +1,13 @@
-from django.db.models import Avg, Count, IntegerField
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.http import HttpResponse
-
-from django.utils import timezone
 from datetime import timedelta
 
-from .tasks import notify
-
-from .models import Author, Book, Publisher, Store
+from django.db.models import Avg, Count, IntegerField
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.utils import timezone
 
 from .forms import Notification
+from .models import Author, Book, Publisher, Store
+from .tasks import notify
 
 
 def notification(request):
@@ -29,7 +26,7 @@ def notification(request):
                 return HttpResponse('Дата в прошлом')
             elif datetime > now + timedelta(days=2):
                 return HttpResponse('Слишком далёкое будущее')
-            notify.apply_async((massage, email, datetime), eta=datetime)
+            notify.apply_async((massage, email), eta=datetime)
             return HttpResponseRedirect('/thanks/')
     # if a GET (or any other method) we'll create a blank form
     else:
