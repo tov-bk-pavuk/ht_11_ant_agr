@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'book_store',
     'django_extensions',
     'django_celery_results',
+    'django_celery_beat',
 
     'debug_toolbar',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -141,7 +143,8 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_BROKER_URL = 'amqp://localhost'
-# CELERY_ACCEPT_CONTENT = ['aplication/json']
+CELERY_ACCEPT_CONTENT = ['aplication/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

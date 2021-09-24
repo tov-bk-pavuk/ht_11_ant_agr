@@ -4,11 +4,12 @@ from bs4 import BeautifulSoup
 
 from celery import shared_task
 
-from django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
-from .models import QuoteAuthor, Quote
+from django.core.mail import send_mail
 
 import requests
+
+from .models import Quote, QuoteAuthor
 
 
 @shared_task
@@ -39,7 +40,6 @@ def scrap():
         soup = cook_soup(url)  # авторы 'small', class_='author'
         items = [i.text for i in soup.find_all(teg, class_=clas)]
         return items
-
     # Возвращает список с текстом тегов
 
     # Функция получить детали авторов (URL_страницы, тело_ссылки_содержит)
@@ -92,7 +92,6 @@ def scrap():
                 url_page = url[:-1] + page_href_text
             else:
                 url_page = url[:-8] + page_href_text
-            print(url_page)
             return get_page(url_page, stop, counter)
         except AttributeError:
             return notify('Больше нет цитат', 'citaty@admin.com')
