@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Author, Book, Publisher, Store
+from .models import Author, Book, Publisher, Quote, QuoteAuthor, Store
 
 
 class BookInline(admin.TabularInline):
@@ -42,3 +42,17 @@ class StoreAdmin(admin.ModelAdmin):
     search_fields = ['name']
     list_filter = ('name',)
     filter_horizontal = ['books']
+
+
+@admin.register(Quote)
+class Quote(admin.ModelAdmin):
+    fields = ['quote', 'author']
+    search_fields = ['quote']
+    list_filter = ('author',)
+
+
+@admin.register(QuoteAuthor)
+class QuoteAuthor(admin.ModelAdmin):
+    fields = ['name', 'description']
+    search_fields = ['name']
+    list_filter = ('name',)
