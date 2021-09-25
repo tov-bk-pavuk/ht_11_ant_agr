@@ -10,7 +10,7 @@ class Notification(forms.Form):
     datetime = forms.DateTimeField(label='дата и время напоминания')
 
 
-class BookForm(ModelForm):
+class AuthorForm(ModelForm):
     class Meta:
         model = Author
         fields = '__all__'

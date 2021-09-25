@@ -12,7 +12,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .forms import Notification
+from .forms import Notification, AuthorForm
 from .models import Author, Book, Publisher, Store
 from .tasks import notify
 
@@ -103,8 +103,17 @@ class AuthorDetailView(DetailView):
 
 
 class AuthorCreateView(CreateView):
+    template_name = 'book_store/create_obj.html'
 
-    pass
+    def get(self, request, *args, **kwargs):
+        form = AuthorForm
+        context = form
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = AuthorForm
+        context = form
+        return render(request, self.template_name, context)
 
 
 class AuthorUpdateView(UpdateView):
