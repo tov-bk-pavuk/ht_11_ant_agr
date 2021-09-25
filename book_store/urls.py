@@ -1,5 +1,11 @@
 from book_store import views
-from book_store.views import AuthorDetailView, AuthorListView
+from book_store.views import (
+    AuthorCreateView,
+    AuthorDetailView,
+    AuthorDeleteView,
+    AuthorListView,
+    AuthorUpdateView)
+
 
 from django.urls import path
 
@@ -15,7 +21,8 @@ urlpatterns = [
     path('stores/', views.stores, name='stores'),
     path('stores/<int:pp>', views.stores_detailed, name='sto_det'),
     path('authors/', AuthorListView.as_view(), name='authors'),
-    #path('authors/', views.authors, name='authors'),
     path('authors/<int:pp>', AuthorDetailView.as_view(), name='aut_det'),
-    #path('authors/<int:pp>', views.authors_detailed, name='aut_det'),
+    path('authors/create', AuthorCreateView.as_view(), name='aut_crt'),
+    path('authors/<int:pp>/update', AuthorUpdateView.as_view(), name='aut_upd'),
+    path('authors/<int:pp>/del', AuthorDeleteView.as_view(), name='del_upd'),
 ]

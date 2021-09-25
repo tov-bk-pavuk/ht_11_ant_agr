@@ -12,7 +12,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .forms import Notification, AuthorForm
+from .forms import AuthorForm, StoreForm, Notification
 from .models import Author, Book, Publisher, Store
 from .tasks import notify
 
@@ -90,9 +90,9 @@ def stores_detailed(request, pp):
 
 
 class AuthorListView(ListView):
+    model = Author
     template_name = "book_store/authors.html"
     queryset = Author.objects.prefetch_related('book_set').all()
-    model = Author
     paginate_by = 15
 
 
@@ -103,22 +103,42 @@ class AuthorDetailView(DetailView):
 
 
 class AuthorCreateView(CreateView):
+    form_class = AuthorForm
     template_name = 'book_store/create_obj.html'
-
-    def get(self, request, *args, **kwargs):
-        form = AuthorForm
-        context = form
-        return render(request, self.template_name, context)
-
-    def post(self, request, *args, **kwargs):
-        form = AuthorForm
-        context = form
-        return render(request, self.template_name, context)
+    success_url = '/thanks/'
 
 
 class AuthorUpdateView(UpdateView):
-    pass
+    model = Author
+    template_name = 'book_store/create_obj.html'
+    pk_url_kwarg = 'pp'
+    form_class = AuthorForm
+    success_url = '/thanks/'
 
 
 class AuthorDeleteView(DeleteView):
-    pass
+    model = Author
+    template_name = 'book_store/del_obj.html'
+    pk_url_kwarg = 'pp'
+    success_url = '/thanks/'
+
+
+class StoreCreateView(CreateView):
+    form_class = StoreForm
+    template_name = 'book_store/create_obj.html'
+    success_url = '/thanks/'
+
+
+class StoreUpdateView(UpdateView):
+    model = Store
+    template_name = 'book_store/create_obj.html'
+    pk_url_kwarg = 'pp'
+    form_class = StoreForm
+    success_url = '/thanks/'
+
+
+class StoreDeleteView(DeleteView):
+    model = Store
+    template_name = 'book_store/del_obj.html'
+    pk_url_kwarg = 'pp'
+    success_url = '/thanks/'
