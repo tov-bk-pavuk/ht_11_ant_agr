@@ -25,4 +25,4 @@ class AuthorForm(ModelForm):
 class StoreForm(ModelForm):
     class Meta:
         model = Store
-        fields = '__all__'
+        fields = ['name', 'books']

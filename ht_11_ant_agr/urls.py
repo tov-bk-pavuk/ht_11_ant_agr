@@ -23,7 +23,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('book_store.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='login'),
     path('__debug__/', include(debug_toolbar.urls)),
 
 ]

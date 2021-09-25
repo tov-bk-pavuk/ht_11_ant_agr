@@ -1,18 +1,19 @@
 from datetime import timedelta
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Avg, Count, IntegerField
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic import (
     CreateView,
+    DeleteView,
     DetailView,
     ListView,
     UpdateView,
-    DeleteView,
 )
 
-from .forms import AuthorForm, StoreForm, Notification
+from .forms import AuthorForm, Notification, StoreForm
 from .models import Author, Book, Publisher, Store
 from .tasks import notify
 
@@ -123,13 +124,15 @@ class AuthorDeleteView(DeleteView):
     success_url = '/thanks/'
 
 
-class StoreCreateView(CreateView):
+class StoreCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/admin/'
     form_class = StoreForm
     template_name = 'book_store/create_obj.html'
     success_url = '/thanks/'
 
 
-class StoreUpdateView(UpdateView):
+class StoreUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/admin/'
     model = Store
     template_name = 'book_store/create_obj.html'
     pk_url_kwarg = 'pp'
@@ -137,7 +140,8 @@ class StoreUpdateView(UpdateView):
     success_url = '/thanks/'
 
 
-class StoreDeleteView(DeleteView):
+class StoreDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/admin/'
     model = Store
     template_name = 'book_store/del_obj.html'
     pk_url_kwarg = 'pp'
