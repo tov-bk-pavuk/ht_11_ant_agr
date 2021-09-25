@@ -9,12 +9,12 @@
     <table border="1" cellspacing="1" cellpadding="10">
         <tr>
             <td>Автор</td>
-            <td>{{ pk.name }}</td>
+            <td>{{ object.name }}</td>
         </tr>
         <tr>
             <td>Книги</td>
             <td>
-                {% for book in pk.book_set.all %}
+                {% for book in object.book_set.all %}
                 <p>{{ book }}</p>
                 {% endfor %}
             </td>

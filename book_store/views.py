@@ -4,6 +4,13 @@ from django.db.models import Avg, Count, IntegerField
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import timezone
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    ListView,
+    UpdateView,
+    DeleteView,
+)
 
 from .forms import Notification
 from .models import Author, Book, Publisher, Store
@@ -12,11 +19,8 @@ from .tasks import notify
 
 def notification(request):
     now = timezone.now()
-    # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
         form = Notification(request.POST)
-        # check whether it's valid:
         if form.is_valid():
             massage = form.cleaned_data['subject']
             email = form.cleaned_data['email']
@@ -28,7 +32,6 @@ def notification(request):
                 return HttpResponse('Слишком далёкое будущее')
             notify.apply_async((massage, email), eta=datetime)
             return HttpResponseRedirect('/thanks/')
-    # if a GET (or any other method) we'll create a blank form
     else:
         form = Notification()
     return render(request, 'book_store/form.html', {'form': form})
@@ -73,9 +76,7 @@ def publishers_detailed(request, pp):
 
 
 def stores(request):
-    # .annotate(Avg(''))
-    # <td align="center">{{ store.books.count  }}</td>
-    stores_query = Store.objects.prefetch_related('books').\
+    stores_query = Store.objects.prefetch_related('books'). \
         all().annotate(sred=Avg('books__price', output_field=IntegerField()))
     return render(request, "book_store/stores.html",
                   context={'stores': stores_query})
@@ -88,14 +89,14 @@ def stores_detailed(request, pp):
     })
 
 
-def authors(request):
-    authors_query = Author.objects.prefetch_related('book_set').all()
-    return render(request, "book_store/authors.html",  # authors_detailed, name='aut_det'),
-                  context={'authors': authors_query})  # stores_detailed, name='sto_det'),
+class AuthorListView(ListView):
+    template_name = "book_store/authors.html"
+    queryset = Author.objects.prefetch_related('book_set').all()
+    model = Author
+    paginate_by = 15
 
 
-def authors_detailed(request, pp):
-    pk = Author.objects.prefetch_related('book_set').get(pk=pp)
-    return render(request, 'book_store/detailed_author.html', context={
-        'pk': pk,
-    })
+class AuthorDetailView(DetailView):
+    model = Author
+    template_name = 'book_store/detailed_author.html'
+    pk_url_kwarg = 'pp'
