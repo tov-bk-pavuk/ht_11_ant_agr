@@ -100,3 +100,16 @@ class AuthorDetailView(DetailView):
     model = Author
     template_name = 'book_store/detailed_author.html'
     pk_url_kwarg = 'pp'
+
+
+class AuthorCreateView(CreateView):
+
+    pass
+
+
+class AuthorUpdateView(UpdateView):
+    pass
+
+
+class AuthorDeleteView(DeleteView):
+    pass
