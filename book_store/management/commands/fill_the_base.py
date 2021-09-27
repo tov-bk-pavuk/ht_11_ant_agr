@@ -12,7 +12,7 @@ fake = Faker()
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
-        parser.add_argument('amount', type=int, choices=range(10, 1000),
+        parser.add_argument('amount', type=int, choices=range(50, 1000),
                             help=u'amount - от 10 до 1000')
 
     def handle(self, *args, **options):
@@ -45,17 +45,16 @@ class Command(BaseCommand):
 
         authors = Author.objects.all()
         length = len(authors)
-        team = list()
-        for i in range(1, 6):
-            team.append(authors[randrange(length)])
 
         books = Book.objects.filter(pk__range=(last, amount + last - 1))
         for i in books:
-            for k in team:
+            for k in [authors[randrange(length)] for i in range(randrange(1, 7))]:
                 i.authors.add(k)
 
-        book_set = books[1:11]
-        stores = Store.objects.filter(pk__range=(last, amount + last - 1))
+        if length > 25:
+            length = 25
+
+        stores = Store.objects.filter(pk__range=(last, amount + last + 1))
         for i in stores:
-            for k in book_set:
+            for k in [books[randrange(len(books))] for i in range(randrange(9, length))]:
                 i.books.add(k)
