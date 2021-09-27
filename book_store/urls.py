@@ -6,8 +6,8 @@ from book_store.views import (
     AuthorListView,
     AuthorUpdateView)
 
-from django.views.decorators.cache import cache_page
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 
 urlpatterns = [

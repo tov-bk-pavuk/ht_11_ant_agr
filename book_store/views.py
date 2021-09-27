@@ -5,7 +5,6 @@ from django.db.models import Avg, Count, IntegerField
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import timezone
-from django.views.decorators.cache import cache_page
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -53,16 +52,6 @@ class BookListView(ListView):
     queryset = Book.objects.all().annotate(Count('authors'))
     paginate_by = 25
 
-
-'''
-def book_list(request):
-    books_query_ant = Book.objects.all().annotate(Count('authors'))
-    books_count = books_query_ant.count()
-    return render(request, "book_store/books.html",
-                  context={'books': books_query_ant,
-                           'amount': books_count,
-                           })
-'''
 
 def detailed(request, pp):
     pk = Book.objects.prefetch_related('authors').get(pk=pp)
