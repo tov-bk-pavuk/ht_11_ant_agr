@@ -46,13 +46,11 @@ def home(request):
     return render(request, "book_store/book_store_index.html")
 
 
-def book_list(request):
-    books_query_ant = Book.objects.all().annotate(Count('authors'))
-    books_count = books_query_ant.count()
-    return render(request, "book_store/books.html",
-                  context={'books': books_query_ant,
-                           'amount': books_count,
-                           })
+class BookListView(ListView):
+    model = Book
+    template_name = "book_store/books.html"
+    queryset = Book.objects.all().annotate(Count('authors'))
+    paginate_by = 25
 
 
 def detailed(request, pp):
@@ -76,11 +74,12 @@ def publishers_detailed(request, pp):
     })
 
 
-def stores(request):
-    stores_query = Store.objects.prefetch_related('books'). \
+class StoreListView(ListView):
+    model = Store
+    template_name = "book_store/stores.html"
+    queryset = Store.objects.prefetch_related('books'). \
         all().annotate(sred=Avg('books__price', output_field=IntegerField()))
-    return render(request, "book_store/stores.html",
-                  context={'stores': stores_query})
+    paginate_by = 50
 
 
 def stores_detailed(request, pp):
@@ -94,7 +93,7 @@ class AuthorListView(ListView):
     model = Author
     template_name = "book_store/authors.html"
     queryset = Author.objects.prefetch_related('book_set').all()
-    paginate_by = 15
+    paginate_by = 50
 
 
 class AuthorDetailView(DetailView):
