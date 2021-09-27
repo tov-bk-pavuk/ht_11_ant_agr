@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load cache %}
 
 {% block title %}Список книг{% endblock %}
-
 {% block content %}
     <h5><a href="{% url 'home' %}">На главную</a></h5>
     <h4>Книжечки, мой друг.</h4>
     <div>
         <h2>Всего книг: {{ amount }}</h2>
+        {% cache 10 table %}
         <table border="1", cellspacing="1px" cellpadding="5px">
         <tr style="font-weight: bold">
                 <td>id</td>
@@ -29,5 +30,7 @@
             </tr>
         {% endfor %}
         </table>
+    {% endcache %}
     </div>
 {% endblock %}
+

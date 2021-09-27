@@ -12,6 +12,7 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
+from django.views.decorators.cache import cache_page
 
 from .forms import AuthorForm, Notification, StoreForm
 from .models import Author, Book, Publisher, Store
@@ -46,6 +47,7 @@ def home(request):
     return render(request, "book_store/book_store_index.html")
 
 
+@cache_page(10)
 def book_list(request):
     books_query_ant = Book.objects.all().annotate(Count('authors'))
     books_count = books_query_ant.count()
